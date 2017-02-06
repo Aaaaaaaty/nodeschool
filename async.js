@@ -138,6 +138,7 @@ var async = require('async')
 // //     console.log(result);
 // // });
 
+// 第一个参数为测试函数，判断符合条件后向下执行
 var count = 0;
 async.whilst(
     function() { return count < 5; },
