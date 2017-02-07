@@ -141,12 +141,12 @@ var async = require('async')
 // 第一个参数为测试函数，判断符合条件后向下执行
 var count = 0;
 async.whilst(
-    function() { return count < 5; },
+    function() { return count < 6; },
     function(callback) {
         count++;
         setTimeout(function() {
             callback(null, count);
-        }, 1000);
+        }, 100);
     },
     function (err, n) {
         // 5 seconds have passed, n = 5

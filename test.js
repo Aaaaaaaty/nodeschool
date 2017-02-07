@@ -1,7 +1,4 @@
-var http = require('http')
-
-var server = http.createServer((req, res) => {
-    res.end('acca')
-})
-
-server.listen(3000)
+for(var i = 0; i < 10; i++) {
+    console.log(i)
+}
+console.log(i)
