@@ -1,4 +1,43 @@
-{
-	data: 1,
-	accc: 2
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server ipv6only=on;
+
+    # 如果要支持HTTPS，修改这里
+    # 可以使用 https://letsencrypt.org 的免费SSL证书
+    #listen 443 ssl;
+    #ssl_certificate     www.example.com.crt;
+    #ssl_certificate_key www.example.com.key;
+    #ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;
+    #ssl_ciphers         HIGH:!aNULL:!MD5;
+
+    # 重定向所有HTTP到HTTPS
+        # rewrite ^(.*)$ https://$host$1 permanent;
+
+        # 网站根目录，根据需要修改
+    root /home/ubuntu/nodeschool/;
+    # 增加index.php
+    index birth.html;
+
+        # 假设域名是 ssl.mcxiaoke.com
+    #server_name ssl.mcxiaoke.com; #绑定域名
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    error_page 404 /404.html;
+    error_page 500 502 503 504 /50x.html;
+    location = /50x.html {
+        root /usr/share/nginx/html;
+    }
+
+        #支持php-fpm的配置
+    location ~ \.php$ {
+        try_files $uri =404;
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        fastcgi_pass unix:/var/run/php5-fpm.sock;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
 }
